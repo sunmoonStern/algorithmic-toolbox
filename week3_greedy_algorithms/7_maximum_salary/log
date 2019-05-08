@@ -1,0 +1,16 @@
+1
+max digit = 1
+10
+max digit = 1
+100
+max digit = 1
+remaining ints: 2
+10
+max digit = 10
+100
+max digit = 10
+remaining ints: 1
+100
+max digit = 100
+remaining ints: 0
+110100
