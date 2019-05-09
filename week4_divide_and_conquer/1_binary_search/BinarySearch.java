@@ -4,15 +4,14 @@ import java.util.*;
 public class BinarySearch {
 
     static int binarySearch(int[] a, int x) {
-        int left = 0, right = a.length;
+        int left = 0, right = a.length - 1;
         //write your code here
-        binarySearchPart(a, left, right, x);
-        return -1;
+        return binarySearchPart(a, left, right, x);
     }
 
     static int binarySearchPart(int[] a, int low, int high, int x) {
         if (high < low) return -1;
-        int mid = (int) Math.floor((low + high)/2d);
+        int mid = (int) Math.floor(low + (high - low)/2d);
         if (a[mid] == x) {
             return mid;
         } else if (a[mid] > x) {
@@ -43,7 +42,7 @@ public class BinarySearch {
         }
         for (int i = 0; i < m; i++) {
             //replace with the call to binarySearch when implemented
-            System.out.print(linearSearch(a, b[i]) + " ");
+            System.out.print(binarySearch(a, b[i]) + " ");
         }
     }
     static class FastScanner {
