@@ -6,8 +6,20 @@ public class BinarySearch {
     static int binarySearch(int[] a, int x) {
         int left = 0, right = a.length;
         //write your code here
-
+        binarySearchPart(a, left, right, x);
         return -1;
+    }
+
+    static int binarySearchPart(int[] a, int low, int high, int x) {
+        if (high < low) return -1;
+        int mid = (int) Math.floor((low + high)/2d);
+        if (a[mid] == x) {
+            return mid;
+        } else if (a[mid] > x) {
+            return binarySearchPart(a, low, mid - 1, x);
+        } else {
+            return binarySearchPart(a, mid + 1, high, x);
+        }
     }
 
     static int linearSearch(int[] a, int x) {
