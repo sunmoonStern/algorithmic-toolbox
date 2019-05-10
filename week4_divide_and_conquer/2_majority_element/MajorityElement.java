@@ -10,7 +10,37 @@ public class MajorityElement {
             return a[left];
         }
         //write your code here
-        return -1;
+        int mid = (int) Math.floor(left + (right - left)/2d);
+        int leftMajorityElement = getMajorityElement(a, left, mid);
+        int rightMajorityElement = getMajorityElement(a, mid, right);
+        System.out.println("left = " + left + " right = " + right);
+        System.out.println("left majority" + leftMajorityElement);
+        System.out.println("right majority" + rightMajorityElement);
+        if (leftMajorityElement == -1 && rightMajorityElement == -1) {
+            return -1;
+        } else {
+            int leftCount = getCount(a, left, right, leftMajorityElement);
+            int rightCount = getCount(a, left, right, rightMajorityElement);
+            int largerCount = Math.max(leftCount, rightCount);
+            if (largerCount > a.length/2d) {
+                if (leftCount > rightCount) {
+                    return leftMajorityElement;
+                } else {
+                    return rightMajorityElement;
+                }
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    static int getCount(int[] a, int left, int right, int x) {
+        int count = 0;
+        if (x < 0) return count;
+        for (int i = left; i < right; i++) {
+            if (a[i] == x) count += 1;
+        }
+        return count;
     }
 
     public static void main(String[] args) {
