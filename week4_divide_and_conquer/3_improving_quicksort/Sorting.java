@@ -6,27 +6,34 @@ public class Sorting {
 
     private static int[] partition3(int[] a, int l, int r) {
       int m1 = l;
-      int m2 = 0;
+      int m2 = r;
       int x = a[l];
       for (int i = l + 1; i <= r; i++) {
+          if (i > m2) break;
           if (a[i] < x) {
               m1++;
               int t = a[i];
               a[i] = a[m1];
               a[m1] = t;
-          } else if (a[i] == x) {
-              m2++;
-              int index = m1 + m2;
+          } else if (a[i] > x) {
+              int tmp = m2;
+              // find the latest element that is < x
+              // swap it with a[i]
+              while (a[m2] >= x) m2--;
+              if (m2 <= i) m2 = tmp;
+              while (a[m2] > x) m2--;
               int t = a[i];
-              a[i] = a[index];
-              a[index] = t;
+              a[i] = a[m2];
+              a[m2] = t;
+              // if current a[i] < x
+              if (a[i] < x) m1++;
           }
+          System.out.println(getDebugInfo(a) + " m1 " + m1 + " m2 " + m2 + " i " + i);
       }
       int t = a[l];
       a[l] = a[m1];
       a[m1] = t;
-      int index = m1 + m2;
-      int[] m = {m1, index};
+      int[] m = {m1, m2};
       return m;
     }
 
@@ -63,7 +70,7 @@ public class Sorting {
         int t = a[l];
         a[l] = a[k];
         a[k] = t;
-        System.out.println("after random swap = " + getDebugInfo(a));
+        System.out.println("after random swap = " + getDebugInfo(a) + " l = " + l + " r = " + r);
         int[] m = partition3(a, l, r);
         System.out.println(getDebugInfo(a));
         randomizedQuickSort(a, l, m[0] - 1);
