@@ -5,12 +5,28 @@ public class Sorting {
     private static Random random = new Random();
 
     private static int[] partition3(int[] a, int l, int r) {
-      //write your code here
-
-
       int m1 = l;
-      int m2 = r;
-      int[] m = {m1, m2};
+      int m2 = 0;
+      int x = a[l];
+      for (int i = l + 1; i <= r; i++) {
+          if (a[i] < x) {
+              m1++;
+              int t = a[i];
+              a[i] = a[m1];
+              a[m1] = t;
+          } else if (a[i] == x) {
+              m2++;
+              int index = m1 + m2;
+              int t = a[i];
+              a[i] = a[index];
+              a[index] = t;
+          }
+      }
+      int t = a[l];
+      a[l] = a[m1];
+      a[m1] = t;
+      int index = m1 + m2;
+      int[] m = {m1, index};
       return m;
     }
 
@@ -31,6 +47,14 @@ public class Sorting {
         return j;
     }
 
+    private static String getDebugInfo(int[] a) {
+        String str = "debug info =";
+        for (int i = 0; i < a.length; i++) {
+            str = str + " " + a[i];
+        }
+        return str;
+    }
+
     private static void randomizedQuickSort(int[] a, int l, int r) {
         if (l >= r) {
             return;
@@ -39,10 +63,11 @@ public class Sorting {
         int t = a[l];
         a[l] = a[k];
         a[k] = t;
-        //use partition3
-        int m = partition2(a, l, r);
-        randomizedQuickSort(a, l, m - 1);
-        randomizedQuickSort(a, m + 1, r);
+        System.out.println("after random swap = " + getDebugInfo(a));
+        int[] m = partition3(a, l, r);
+        System.out.println(getDebugInfo(a));
+        randomizedQuickSort(a, l, m[0] - 1);
+        randomizedQuickSort(a, m[1] + 1, r);
     }
 
     public static void main(String[] args) {

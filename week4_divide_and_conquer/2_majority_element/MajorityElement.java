@@ -13,16 +13,14 @@ public class MajorityElement {
         int mid = (int) Math.floor(left + (right - left)/2d);
         int leftMajorityElement = getMajorityElement(a, left, mid);
         int rightMajorityElement = getMajorityElement(a, mid, right);
-        System.out.println("left = " + left + " right = " + right);
-        System.out.println("left majority" + leftMajorityElement);
-        System.out.println("right majority" + rightMajorityElement);
         if (leftMajorityElement == -1 && rightMajorityElement == -1) {
             return -1;
         } else {
-            int leftCount = getCount(a, left, right, leftMajorityElement);
-            int rightCount = getCount(a, left, right, rightMajorityElement);
+            int leftCount = 0, rightCount = 0;
+            if (leftMajorityElement >= 0) leftCount = getCount(a, left, right, leftMajorityElement);
+            if (rightMajorityElement >= 0) rightCount = getCount(a, left, right, rightMajorityElement);
             int largerCount = Math.max(leftCount, rightCount);
-            if (largerCount > a.length/2d) {
+            if (largerCount > Math.floor((right - left)/2d)) {
                 if (leftCount > rightCount) {
                     return leftMajorityElement;
                 } else {
@@ -36,7 +34,6 @@ public class MajorityElement {
 
     static int getCount(int[] a, int left, int right, int x) {
         int count = 0;
-        if (x < 0) return count;
         for (int i = left; i < right; i++) {
             if (a[i] == x) count += 1;
         }
