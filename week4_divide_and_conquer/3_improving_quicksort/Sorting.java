@@ -6,27 +6,28 @@ public class Sorting {
 
     private static int[] partition3(int[] a, int l, int r) {
       int m1 = l;
-      int m2 = r;
+      int m2 = l;
       int x = a[l];
       for (int i = l + 1; i <= r; i++) {
-          if (i > m2) break;
           if (a[i] < x) {
               m1++;
-              int t = a[i];
-              a[i] = a[m1];
-              a[m1] = t;
-          } else if (a[i] > x) {
-              int tmp = m2;
-              // find the latest element that is < x
-              // swap it with a[i]
-              while (a[m2] >= x) m2--;
-              if (m2 <= i) m2 = tmp;
-              while (a[m2] > x) m2--;
+              m2++;
+              if (m1 == m2) {
+                  int t = a[i];
+                  a[i] = a[m1];
+                  a[m1] = t;
+              } else {
+                  int t = a[m1];
+                  int s = a[m2];
+                  a[m1] = a[i];
+                  a[m2] = t;
+                  a[i] = s;
+              }
+          } else if (a[i] == x) {
+              m2++;
               int t = a[i];
               a[i] = a[m2];
               a[m2] = t;
-              // if current a[i] < x
-              if (a[i] < x) m1++;
           }
           System.out.println(getDebugInfo(a) + " m1 " + m1 + " m2 " + m2 + " i " + i);
       }
