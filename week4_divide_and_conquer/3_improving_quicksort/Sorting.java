@@ -12,10 +12,16 @@ public class Sorting {
           if (a[i] < x) {
               m1++;
               m2++;
-              if (m1 == m2) {
+              if (m1 == m2) { // no space with == x
                   int t = a[i];
                   a[i] = a[m1];
                   a[m1] = t;
+              } else if (m2 == i){ // i is right after space with == x
+                  int t = a[m1];
+                  a[m1] = a[i];
+                  a[i] = t;
+              } else if (m1 == i) { // i is right after space with < x
+                  continue;
               } else {
                   int t = a[m1];
                   int s = a[m2];
@@ -29,7 +35,7 @@ public class Sorting {
               a[i] = a[m2];
               a[m2] = t;
           }
-          System.out.println(getDebugInfo(a) + " m1 " + m1 + " m2 " + m2 + " i " + i);
+          // System.out.println(getDebugInfo(a) + " m1 " + m1 + " m2 " + m2 + " i " + i);
       }
       int t = a[l];
       a[l] = a[m1];
@@ -71,9 +77,9 @@ public class Sorting {
         int t = a[l];
         a[l] = a[k];
         a[k] = t;
-        System.out.println("after random swap = " + getDebugInfo(a) + " l = " + l + " r = " + r);
+        // System.out.println("after random swap = " + getDebugInfo(a) + " l = " + l + " r = " + r);
         int[] m = partition3(a, l, r);
-        System.out.println(getDebugInfo(a));
+        // System.out.println(getDebugInfo(a));
         randomizedQuickSort(a, l, m[0] - 1);
         randomizedQuickSort(a, m[1] + 1, r);
     }
