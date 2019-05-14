@@ -6,29 +6,36 @@ public class Sorting {
 
     private static int[] partition3(int[] a, int l, int r) {
       int m1 = l;
-      int m2 = r;
+      int m2 = l;
       int x = a[l];
       for (int i = l + 1; i <= r; i++) {
-          if (i > m2) break;
           if (a[i] < x) {
               m1++;
-              int t = a[i];
-              a[i] = a[m1];
-              a[m1] = t;
-          } else if (a[i] > x) {
-              int tmp = m2;
-              // find the latest element that is < x
-              // swap it with a[i]
-              while (a[m2] >= x) m2--;
-              if (m2 <= i) m2 = tmp;
-              while (a[m2] > x) m2--;
+              m2++;
+              if (m1 == m2) { // no space with == x
+                  int t = a[i];
+                  a[i] = a[m1];
+                  a[m1] = t;
+              } else if (m2 == i){ // i is right after space with == x
+                  int t = a[m1];
+                  a[m1] = a[i];
+                  a[i] = t;
+              } else if (m1 == i) { // i is right after space with < x
+                  continue;
+              } else {
+                  int t = a[m1];
+                  int s = a[m2];
+                  a[m1] = a[i];
+                  a[m2] = t;
+                  a[i] = s;
+              }
+          } else if (a[i] == x) {
+              m2++;
               int t = a[i];
               a[i] = a[m2];
               a[m2] = t;
-              // if current a[i] < x
-              if (a[i] < x) m1++;
           }
-          System.out.println(getDebugInfo(a) + " m1 " + m1 + " m2 " + m2 + " i " + i);
+          // System.out.println(getDebugInfo(a) + " m1 " + m1 + " m2 " + m2 + " i " + i);
       }
       int t = a[l];
       a[l] = a[m1];
@@ -70,9 +77,9 @@ public class Sorting {
         int t = a[l];
         a[l] = a[k];
         a[k] = t;
-        System.out.println("after random swap = " + getDebugInfo(a) + " l = " + l + " r = " + r);
+        // System.out.println("after random swap = " + getDebugInfo(a) + " l = " + l + " r = " + r);
         int[] m = partition3(a, l, r);
-        System.out.println(getDebugInfo(a));
+        // System.out.println(getDebugInfo(a));
         randomizedQuickSort(a, l, m[0] - 1);
         randomizedQuickSort(a, m[1] + 1, r);
     }
