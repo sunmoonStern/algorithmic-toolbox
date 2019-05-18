@@ -3,8 +3,32 @@ import java.util.*;
 public class LCS2 {
 
     private static int lcs2(int[] a, int[] b) {
-        //Write your code here
-        return Math.min(a.length, b.length);
+        int aLen = a.length;
+        int bLen = b.length;
+        int[][] storeCounts = new int[aLen + 1][bLen + 1];
+        for (int i = 0; i <= aLen; i++) {
+            storeCounts[i][0] = 0;
+        }
+        for (int j = 0; j <= bLen; j++) {
+            storeCounts[0][j] = 0;
+        }
+        for (int i = 1; i <= aLen; i++) {
+            for (int j = 1; j <= bLen; j++) {
+                int lastIncreasedI = -1;
+                int lastIncreasedJ = -1;
+                int greaterOne = Math.max(storeCounts[i][j-1], storeCounts[i-1][j]);
+                // index of i-th element is i-1
+                // (i, j+1...) (i+1..., j) is the same
+                if (a[i-1] == b[j-1] && lastIncreasedI != i && lastIncreasedJ != j) {
+                    lastIncreasedI = i;
+                    lastIncreasedJ = j;
+                    storeCounts[i][j] = greaterOne + 1;
+                } else {
+                    storeCounts[i][j] = greaterOne;
+                }
+            }
+        }
+        return storeCounts[aLen][bLen];
     }
 
     public static void main(String[] args) {
