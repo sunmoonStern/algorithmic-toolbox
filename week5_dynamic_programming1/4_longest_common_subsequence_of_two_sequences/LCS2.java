@@ -12,10 +12,10 @@ public class LCS2 {
         for (int j = 0; j <= bLen; j++) {
             storeCounts[0][j] = 0;
         }
+        int lastIncreasedI = -1;
+        int lastIncreasedJ = -1;
         for (int i = 1; i <= aLen; i++) {
             for (int j = 1; j <= bLen; j++) {
-                int lastIncreasedI = -1;
-                int lastIncreasedJ = -1;
                 int greaterOne = Math.max(storeCounts[i][j-1], storeCounts[i-1][j]);
                 // index of i-th element is i-1
                 // (i, j+1...) (i+1..., j) is the same
