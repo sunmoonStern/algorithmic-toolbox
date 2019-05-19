@@ -12,22 +12,15 @@ public class LCS2 {
         for (int j = 0; j <= bLen; j++) {
             storeCounts[0][j] = 0;
         }
-        int lastIncreasedI = -1;
-        int lastIncreasedJ = -1;
         for (int i = 1; i <= aLen; i++) {
             for (int j = 1; j <= bLen; j++) {
-                if (i <= lastIncreasedI || j <= lastIncreasedJ) continue;
                 int greaterOne = Math.max(storeCounts[i][j-1], storeCounts[i-1][j]);
                 // index of i-th element is i-1
                 // the value for index pair (i, j+1...) (i+1..., j) is the same as (i, j)
                 if (a[i-1] != b[j-1]) {
                     storeCounts[i][j] = greaterOne;
                 } else {
-                    lastIncreasedI = i;
-                    lastIncreasedJ = j;
-                    storeCounts[i][j] = greaterOne + 1;
-                    for (int k = i + 1; k <= aLen; k++) storeCounts[k][j] = storeCounts[i][j];
-                    for (int k = j + 1; k <= bLen; k++) storeCounts[i][k] = storeCounts[i][j];
+                    storeCounts[i][j] = storeCounts[i-1][j-1] + 1;
                 }
             }
         }
